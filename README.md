@@ -1,7 +1,4 @@
 # LIBD75
-Codes for LIBD75 project.
-
-
 
 Base-calling
 
