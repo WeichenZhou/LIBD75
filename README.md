@@ -26,13 +26,21 @@ Alignment
 Genetic Variant calling
 
 * MEI
+
 ** Illumina
+
     *** Single Cell
+
     *** Bulk
+
 ** ONT
+
     *** Single Cell
+
     *** Bulk
+
 ** TEnCATS
+
 ** Assembly Contig
 
 * SNV
