@@ -27,24 +27,40 @@ Genetic Variant calling
 
 * MEI
 
-** Illumina
+    * Illumina
 
-    *** Single Cell
+        * Single Cell
 
-    *** Bulk
+        * Bulk
 
-** ONT
+    * ONT
 
-    *** Single Cell
+        * Single Cell
 
-    *** Bulk
+        * Bulk
 
-** TEnCATS
+    * TEnCATS
 
-** Assembly Contig
+    * Assembly Contig
 
 * SNV
 
+    * Illumina
+
+        * Single Cell
+
+        * Bulk
+
+    * ONT
+
+        * Single Cell
+
+        * Bulk
+
+    * TEnCATS
+
+    * Assembly Contig
+    
 Data analysis
 
 
