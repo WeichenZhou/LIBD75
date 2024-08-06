@@ -3,7 +3,7 @@
 ### Base-calling
 
 
-Assembly
+### Assembly
 
 * Flye:
 
@@ -20,10 +20,10 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 
 
 
-Alignment
+### Alignment
 
 
-Genetic Variant calling
+### Genetic Variant calling
 
 * MEI
 
@@ -61,6 +61,6 @@ Genetic Variant calling
 
     * Assembly Contig
     
-Data analysis
+### Data analysis
 
 
