@@ -23,7 +23,7 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 ### Alignment
 
 
-### Genetic Variant calling
+### Genetic Variant Calling
 
 * MEI
 
@@ -123,33 +123,153 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 
             ```
 
-        * PAV version 2.0.0
+        * PAV version 2.3.4
 
             ``` 
-            singularity run \
-                library://becklab/pav/pav:latest -c 16
+            singularity run --bind $pwd:$pwd library://becklab/pav/pav:latest -c 16
 
-            #Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
+            # Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
             ```
 
 * SNV
 
     * Illumina
 
+        * Bulk
+
+            * GATK Mutect2 version 4.3.0.0
+
+            ``` 
+            gatk Mutect2 \
+            -I $bam_file \
+            -R GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            -O $mutect2_output_file
+            ``` 
+
+            * MosaicForecast version 0.0.1
+
+            Clean mutect2 output to get potential coordinates:
+
+            ``` 
+            singularity exec mosaicforecast_0.0.1.sif \
+            python ./MosaicForecast/MuTect2-PoN_filter.py \
+            $illumina_bulk.bed \
+            ./mutect2_output_file \
+            ./MosaicForecast/resources/SegDup_and_clustered.GRCh38.bed
+            ``` 
+
+            ReadLevel features extraction:
+            
+            ``` 
+            singularity exec mosaicforecast_0.0.1.sif \
+            python ./MosaicForecast/ReadLevel_Features_extraction.py \
+            ./$illumina_bulk.bed \
+            ./$illumina_bulk.features \
+            $bam_file \
+            ./GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            ./MosaicForecast/hg38/k24.umap.wg.bw \
+            16 \
+            bam
+            ``` 
+
+            Genotyping:
+
+            ```
+            singularity exec mosaicforecast_0.0.1.sif \
+            Rscript ./MosaicForecast/Prediction.R \
+            ./$illumina_bulk.features \
+            ./MosaicForecast/models_trained/50xRFmodel_addRMSK_Refine.rds Refine \
+            ./$bulk.genotype
+            ```
+
+            * DeepVariant version 1.6.0
+
+            ```
+            singularity exec deepvariant_1.6.0.sif \
+            /opt/deepvariant/bin/run_deepvariant \
+            --model_type=WGS \
+            --ref=./GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --reads=$bam_file \
+            --output_vcf=$out.vcf \
+            --num_shards=12
+            ```
+
+            * Clair3 version 1.0.6
+
+            ```
+            singularity exec clair3_latest.sif \
+            /opt/bin/run_clair3.sh \
+            --bam_fn=$bam_file \
+            --ref_fn=GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --threads=18 \
+            --platform="ilmn" \
+            --model_path=/opt/models/ilmn \
+            --output=$output_dire
+            ```
+            
+            * ClairS-TO version 0.0.2
+
+            ```
+            singularity exec clairs-to_latest.sif \
+            /opt/bin/run_clairs_to \
+            --tumor_bam_fn $bam_file \
+            --ref_fn ./GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --threads 18 \
+            --platform "ilmn" \
+            --output_dir $output_dire \
+            -conda_prefix /opt/micromamba/envs/clairs-to
+            ```
+
         * Single Cell
 
-        * Bulk
 
     * ONT
 
-        * Single Cell
-
         * Bulk
 
-    * TEnCATS
+            * DeepVariant version 1.6.0
+
+            ```
+            singularity exec deepvariant_1.6.0.sif \
+            /opt/deepvariant/bin/run_deepvariant \
+            --model_type=ONT_R104 \
+            --ref=/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --reads=$bam_file \
+            --output_vcf=$out.vcf \
+            --num_shards=36
+            ```
+
+            * Clair3 version 1.0.6
+
+            ```
+            singularity exec clair3_latest.sif \
+            /opt/bin/run_clair3.sh \
+            --bam_fn=$bam_file \
+            --ref_fn=GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --threads=18 \
+            --platform="ont" \
+            --model_path=./rerio/clair3_models/r1041_e82_400bps_sup_v410 \ #downloaded from https://github.com/nanoporetech/rerio
+            --output=$out_dire
+            ```
+
+            * ClairS-TO version 0.0.2
+
+            ```
+
+            ```
+
+        * Single Cell
 
     * Assembly Contig
+        
+        * PAV version 2.3.4
+
+            ``` 
+            singularity run --bind $pwd:$pwd library://becklab/pav/pav:latest -c 16
+
+            # Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
+            ```
     
-### Data analysis
+### Data Analysis
 
 
