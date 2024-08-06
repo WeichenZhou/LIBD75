@@ -222,6 +222,12 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 
         * Single Cell
 
+        We used samtools mpileup to check if the AF presence in SC bam files. 
+
+        ```
+        samtools mpileup -q 15 -d 90 -f /home/drinktea/Desktop/smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions /home/drinktea/millslab/final_version/snv/sc_cell_count/bulkchecked_GIAB_encode_coord_tochecksc --output-extra MAPQ 
+        ```
+
 
     * ONT
 
