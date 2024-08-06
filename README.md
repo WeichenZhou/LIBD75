@@ -109,12 +109,27 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 
     * Assembly Contig
 
-            * xTea version 0.1.9
+        * Palmer version 2.0.0
 
             ``` 
-            ./xTea/bin/xtea -i sample_id.txt -b illumina_bam_list.txt -x null -p $Work_dire -o $Work_dire/submit_jobs.sh -l $Rep_lib -r GCA_000001405.15_GRCh38_no_alt_analysis_set.fa -g gencode.v33.annotation.gff3 --xtea ./xTea/bin/xtea/ -f 5907 -y 7
-            # sample_id.txt: samples id list
-            # illumina_bam_list.txt: Illumina bam file list
+            # L1
+            ./PALMER --input $bam_file --workdir $work_dire --ref_ver GRCh38 --output $output --type LINE --mode asm --chr $chr --ref_fa GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+
+            # Alu
+            ./PALMER --input $bam_file --workdir $work_dire --ref_ver GRCh38 --output $output --type ALU --mode asm --chr $chr --ref_fa GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+
+            # SVA
+            ./PALMER --input $bam_file --workdir $work_dire --ref_ver GRCh38 --output $output --type SVA --mode asm --chr $chr --ref_fa GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+
+            ```
+
+        * PAV version 2.0.0
+
+            ``` 
+            singularity run \
+                library://becklab/pav/pav:latest -c 16
+
+            #Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
             ```
 
 * SNV
