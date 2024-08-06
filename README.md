@@ -30,6 +30,10 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
     * Illumina
 
         * Single Cell
+        
+        ``` 
+        HD_DIR=/nfs/turbo/umms-smaht/working/202402_assembly/wholerun/
+        ```
 
         * Bulk
 
