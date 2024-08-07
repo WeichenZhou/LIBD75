@@ -222,10 +222,13 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
 
         * Single Cell
 
-        We used samtools mpileup to check if the AF presence in SC bam files. 
+        We used samtools mpileup to check if the AF presence in single cell bam files. 
 
         ```
-        samtools mpileup -q 15 -d 90 -f /home/drinktea/Desktop/smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions /home/drinktea/millslab/final_version/snv/sc_cell_count/bulkchecked_GIAB_encode_coord_tochecksc --output-extra MAPQ 
+        samtools mpileup -q 15 -d 90 -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions $Potential_coordinates --output-extra MAPQ $bam_file
+
+        # And the output is processed by TODO
+
         ```
 
 
@@ -261,10 +264,26 @@ singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/a
             * ClairS-TO version 0.0.2
 
             ```
-
+            singularity exec ./clairs-to_latest.sif \
+            /opt/bin/run_clairs_to \
+            --tumor_bam_fn $bam_file \
+            --ref_fn ./GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+            --threads 18 \
+            --platform ont_r10_dorado_sup_4khz \
+            --output_dir $output_dire \
+            --conda_prefix /opt/micromamba/envs/clairs-to
             ```
 
         * Single Cell
+
+        We used samtools mpileup to check if the AF presence in single cell bam files. 
+
+        ```
+        samtools mpileup -q 15 -d 90 -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions $Potential_coordinates --output-extra MAPQ $bam_file
+
+        # And the output is processed by TODO
+        
+        ```
 
     * Assembly Contig
         
