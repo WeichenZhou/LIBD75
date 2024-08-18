@@ -9,6 +9,10 @@
 
 ``` flye --nano-raw path-of-lr-fastq -g 3g -o flye -t 30 ```
 
+* Shasta:
+
+``` ./shasta-Linux-0.11.1 --input /nfs/turbo/umms-smaht/working/202407_ONT_merging/ONT.bulk.fastq --config customized.conf --assemblyDirectory shasta --threads 30 ```
+
 * Hapdup:
 
 ``` HD_DIR=/nfs/turbo/umms-smaht/working/202402_assembly/wholerun/
