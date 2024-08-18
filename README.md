@@ -21,6 +21,8 @@ samtools index -@ 4 $HD_DIR/hapdup/lr_mapping.bam
 
 singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/assembly.fasta --bam $HD_DIR/hapdup/lr_mapping.bam --out-dir hapdup -t 24 --rtype ont
 ```
+* Hapog:
+``` ```
 
 
 
