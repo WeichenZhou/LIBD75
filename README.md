@@ -2,6 +2,7 @@
 
 ### Base-calling
 
+```
 dorado-0.7.2-linux-x64/bin/dorado basecaller \
     dorado-0.7.2-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v5.0.0 \
     LIBD75/"$exp"/"$pod5"/ \
@@ -12,6 +13,7 @@ dorado-0.7.2-linux-x64/bin/dorado basecaller \
     --reference /data/genomes/hg38_no_alt/minimap2_index/hg38_no_alt.mmi |  samtools sort -o "$exp".sorted.bam
 
 samtools index "$exp".sorted.bam
+```
 
 ### Assembly
 
