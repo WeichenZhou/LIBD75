@@ -19,22 +19,45 @@ samtools index "$exp".sorted.bam
 
 * Flye:
 
-``` flye --nano-raw path-of-lr-fastq -g 3g -o flye -t 30 ```
+```
+flye --nano-raw path-of-lr-fastq -g 3g -o flye -t 30 
+```
 
 * Shasta:
 
-``` ./shasta-Linux-0.11.1 --input /nfs/turbo/umms-smaht/working/202407_ONT_merging/ONT.bulk.fastq --config customized.conf --assemblyDirectory shasta --threads 30 ```
+``` 
+./shasta-Linux-0.11.1 --input $DIR/data/ONT/ONT.bulk.fastq --config customized.conf --assemblyDirectory shasta --threads 30
+```
 
 * Hapdup:
 
-``` HD_DIR=/nfs/turbo/umms-smaht/working/202402_assembly/wholerun/
+```
 minimap2 -ax map-ont -t 30 $HD_DIR/flye/assembly.fasta path-of-lr-fastq | samtools sort -@ 4 -m 4G > $HD_DIR/hapdup/lr_mapping.bam
 samtools index -@ 4 $HD_DIR/hapdup/lr_mapping.bam
 
-singularity exec --bind $HD_DIR hapdup_0.12.sif hapdup --assembly $HD_DIR/flye/assembly.fasta --bam $HD_DIR/hapdup/lr_mapping.bam --out-dir hapdup -t 24 --rtype ont
+singularity exec --bind $DIR hapdup_0.12.sif hapdup --assembly $DIR/shasta/shasta.fasta --bam $DIR/hapdup/lr_mapping.bam --out-dir hapdup -t 24 --rtype ont
 ```
 * Hapog:
-``` ```
+```
+hapog --genome shasta.hapdup.fasta --pe1 $DIR/data/Illumina/LIBD75_Illumina_WGS_R1.fastq --pe2 $DIR/data/Illumina/LIBD75_Illumina_WGS_R2.fastq -o hapog -t 24 -u
+```
+* BUSCO:
+```
+busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H1/ --auto-lineage
+busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H2/ --auto-lineage
+```
+
+* QUAST:
+```
+quast.py $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta -r /nfs/turbo/umms-smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa -o quast -t 24
+```
+
+* Merqury:
+```
+meryl k=21 count $DIR/data/Illumina/*.fastq.gz output $genome.meryl
+$MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta merqury/
+```
+
 
 
 
