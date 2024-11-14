@@ -65,11 +65,11 @@ python $DIR/QC_consist.py filtered_output.txt shasta.hapdup.phased.hapog.pileup
 ```
   phased_hetsnp_loc.txt 
   - This file contains the chromosome and position information for phased heterozygous SNPs. 
-  - Format: CHROM\tPOS
+  - Format: ```CHROM\tPOS```
 
   filtered_output.txt
   - This file includes detailed information on SNPs after filtering.
-  - Format: CHROM\tPOS\tREF\tALT\tGT
+  - Format: ```CHROM\tPOS\tREF\tALT\tGT```
 
 
 
