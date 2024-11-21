@@ -61,6 +61,7 @@ $MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR
 ```
 samtools mpileup -l phased_hetsnp_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
 python $DIR/QC_consist.py filtered_output.txt shasta.hapdup.phased.hapog.pileup
+```
 * Input
 phased_hetsnp_loc.txt 
   - This file contains the chromosome and position information for phased heterozygous SNPs. 
@@ -69,8 +70,6 @@ phased_hetsnp_loc.txt
   filtered_output.txt
   - This file includes detailed information on SNPs after filtering.
   - Format: ```CHROM\tPOS\tREF\tALT\tGT```
-```
-
 
 
 
