@@ -52,28 +52,29 @@ busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_
 quast.py $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta -r /nfs/turbo/umms-smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa -o quast -t 24
 ```
 
-* Merqury:
+Merqury:
 ```
 meryl k=21 count $DIR/data/Illumina/*.fastq.gz output $genome.meryl
 $MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta merqury/
 ```
-
-* 10x Heterozygous Phased SNP Recall Rate:
+10x Heterozygous Phased SNP Recall Rate:
 ```
 samtools mpileup -l phased_hetsnp_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
 python $DIR/QC_consist.py filtered_output.txt shasta.hapdup.phased.hapog.pileup
-```
-  phased_hetsnp_loc.txt 
+* Input
+phased_hetsnp_loc.txt 
   - This file contains the chromosome and position information for phased heterozygous SNPs. 
   - Format: ```CHROM\tPOS```
 
   filtered_output.txt
   - This file includes detailed information on SNPs after filtering.
   - Format: ```CHROM\tPOS\tREF\tALT\tGT```
+```
 
 
 
-### Alignment
+
+### Phasing
 
 
 ### Genetic Variant Calling
