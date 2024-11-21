@@ -2,6 +2,8 @@
 
 ### Base-calling
 
+**dorado**
+
 ```
 dorado-0.7.2-linux-x64/bin/dorado basecaller \
     dorado-0.7.2-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v5.0.0 \
@@ -11,25 +13,28 @@ dorado-0.7.2-linux-x64/bin/dorado basecaller \
     --trim adapters \
     -Y --mm2-preset "map-ont" \
     --reference /data/genomes/hg38_no_alt/minimap2_index/hg38_no_alt.mmi |  samtools sort -o "$exp".sorted.bam
+```
 
+**samtools**
+```
 samtools index "$exp".sorted.bam
 ```
 
 ### Assembly
 
-* Flye:
+**Flye**
 
 ```
 flye --nano-raw path-of-lr-fastq -g 3g -o flye -t 30 
 ```
 
-* Shasta:
+**Shasta**
 
 ``` 
 ./shasta-Linux-0.11.1 --input $DIR/data/ONT/ONT.bulk.fastq --config customized.conf --assemblyDirectory shasta --threads 30
 ```
 
-* Hapdup:
+**Hapdup**
 
 ```
 minimap2 -ax map-ont -t 30 $HD_DIR/flye/assembly.fasta path-of-lr-fastq | samtools sort -@ 4 -m 4G > $HD_DIR/hapdup/lr_mapping.bam
@@ -37,46 +42,82 @@ samtools index -@ 4 $HD_DIR/hapdup/lr_mapping.bam
 
 singularity exec --bind $DIR hapdup_0.12.sif hapdup --assembly $DIR/shasta/shasta.fasta --bam $DIR/hapdup/lr_mapping.bam --out-dir hapdup -t 24 --rtype ont
 ```
-* Hapog:
+
+**HAPO-G**
+
 ```
 hapog --genome shasta.hapdup.fasta --pe1 $DIR/data/Illumina/LIBD75_Illumina_WGS_R1.fastq --pe2 $DIR/data/Illumina/LIBD75_Illumina_WGS_R2.fastq -o hapog -t 24 -u
 ```
-* BUSCO:
+
+**BUSCO**
+
 ```
 busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H1/ --auto-lineage
 busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H2/ --auto-lineage
 ```
 
-* QUAST:
+**QUAST**
+
 ```
 quast.py $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta -r /nfs/turbo/umms-smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa -o quast -t 24
 ```
 
-Merqury:
+**Merqury**
+
 ```
 meryl k=21 count $DIR/data/Illumina/*.fastq.gz output $genome.meryl
 $MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta merqury/
 ```
-10x Heterozygous Phased SNP Recall Rate:
+
+**10x Heterozygous Phased SNP Recall Rate**
+
 ```
 samtools mpileup -l phased_hetsnp_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
 python $DIR/QC_consist.py filtered_output.txt shasta.hapdup.phased.hapog.pileup
 ```
-* Input
-phased_hetsnp_loc.txt 
-  - This file contains the chromosome and position information for phased heterozygous SNPs. 
-  - Format: ```CHROM\tPOS```
 
-  filtered_output.txt
-  - This file includes detailed information on SNPs after filtering.
-  - Format: ```CHROM\tPOS\tREF\tALT\tGT```
+Input
+```    
+phased_hetsnp_loc.txt:
 
+    This file contains the chromosome and position information for phased heterozygous SNPs.
+    Format: `CHROM\tPOS`
+        
+filtered_output.txt:
+
+    This file includes detailed information on SNPs after filtering.
+    Format: `CHROM\tPOS\tREF\tALT\tGT`
+```
 
 
 ### Phasing
 
 
 ### Genetic Variant Calling
+
+* Assembly Contig
+        
+    **PAV version 2.3.4**
+    
+    ``` 
+    singularity run --bind $pwd:$pwd library://becklab/pav/pav:latest -c 16
+    
+    # Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
+    ```
+    
+* Bulk Tissue
+
+
+
+
+
+* Neurons
+
+
+
+
+
+
 
 * MEI
 
@@ -338,16 +379,7 @@ phased_hetsnp_loc.txt
         
         ```
 
-    * Assembly Contig
-        
-        * PAV version 2.3.4
 
-            ``` 
-            singularity run --bind $pwd:$pwd library://becklab/pav/pav:latest -c 16
-
-            # Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
-            ```
-    
 ### Data Analysis
 
 
