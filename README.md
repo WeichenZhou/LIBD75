@@ -72,20 +72,20 @@ $MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR
 **10x Heterozygous Phased SNP Recall Rate**
 
 ```
-samtools mpileup -l phased_hetsnp_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
-python $DIR/QC_consist.py filtered_output.txt shasta.hapdup.phased.hapog.pileup
+samtools mpileup -l 10x_snps_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
+python $DIR/QC_consist.py 10x_snps_detail.txt shasta.hapdup.phased.hapog.pileup
 ```
 
 Input
 ```    
-phased_hetsnp_loc.txt:
+10x_snps_loc.txt:
 
-    This file contains the chromosome and position information for phased heterozygous SNPs.
+    This file contains the chromosome and position information for phased heterozygous SNPs called from 10x linked-reads.
     Format: `CHROM\tPOS`
         
-filtered_output.txt:
+10x_snps_detail.txt:
 
-    This file includes detailed information on SNPs after filtering.
+    This file includes detailed information on SNPs listed in the above file.
     Format: `CHROM\tPOS\tREF\tALT\tGT`
 ```
 
