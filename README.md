@@ -134,6 +134,15 @@ python assign_haplotype.py \
     ./PALMER --input $bam_file --workdir $work_dire --ref_ver GRCh38 --output $output --type SVA --mode asm --chr $chr --ref_fa GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
     ```
 
+* Linked reads
+
+    **longranger version 2.2.2**
+
+    ```
+    longranger wgs --id=LIBD75 --reference=${REF} --fastqs=${fastq} --somatic --vcmode=gatk:/sw/pkgs/med/gatk/3.7/GenomeAnalysisTK.jar --localcores=20 --sex=male
+
+    ```
+
 * Bulk Tissue ONT
 
     **DeepVariant version 1.6.0**
