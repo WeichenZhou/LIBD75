@@ -74,11 +74,9 @@ $MERQURY/merqury.sh genome.meryl $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR
 ```
 samtools mpileup -l 10x_snps_loc.txt $DIR/Hap1.shasta.hapdup.phased.hapog.sorted.bam $DIR/Hap2.shasta.hapdup.phased.hapog.sorted.bam > shasta.hapdup.phased.hapog.pileup
 python $DIR/QC_consist.py 10x_snps_detail.txt shasta.hapdup.phased.hapog.pileup
-```
 
-*Input*
 
-```    
+#Input
 10x_snps_loc.txt:
 
     This file contains the chromosome and position information for phased heterozygous SNPs called from 10x linked-reads.
