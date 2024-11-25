@@ -136,7 +136,7 @@ python assign_haplotype.py \
 
 * Linked reads
 
-    **longranger version 2.2.2**
+    **LongRanger version 2.2.2**
 
     ```
     longranger wgs --id=LIBD75 --reference=${REF} --fastqs=${fastq} --somatic --vcmode=gatk:/sw/pkgs/med/gatk/3.7/GenomeAnalysisTK.jar --localcores=20 --sex=male
