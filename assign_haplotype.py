@@ -24,6 +24,7 @@ from itertools import islice, product
 from bisect import bisect, bisect_left, bisect_right
 from collections import defaultdict
 import pickle
+import argparse
 
 def InRange(mylist, pos):
     for idx, val in enumerate(mylist):
@@ -304,22 +305,33 @@ def GenerateResult(cellname, readfile, outfile, hapcount, hetsnp, snp_pos):
     outfile.close()
     return hapcount
 
-folder = '/scratch/remills_root/remills0/wjhlang/'
-extensions = ('.bam')
-hetsnp = os.path.join(folder, "phased_hetsnp_possorted.vcf.gz")
-hetsnp = pysam.VariantFile(hetsnp)
+# Set up argument parsing
+parser = argparse.ArgumentParser(description='Process BAM files and generate haplotype counts.')
+parser.add_argument('--input_bam', required=True, help='Path to the input BAM file')
+parser.add_argument('--output_bam', required=True, help='Path to the output BAM file')
+parser.add_argument('--output_hapcount', required=True, help='Path to the output hapcount pickle file')
+parser.add_argument('--hetsnp_vcf', required=True, help='Path to the hetsnp VCF file')
+
+args = parser.parse_args()
+
+# VCF
+hetsnp = pysam.VariantFile(args.hetsnp_vcf)
 
 hapcount = {}
 
+# SNP positions
 snp_pos = defaultdict(list)
 for snp in hetsnp.fetch():
     snp_pos[snp.chrom].append(snp.pos)
 
+# Input BAM file
+readfile = pysam.AlignmentFile(args.input_bam, mode='rb')
 
-readfile = os.path.join('/nfs/turbo/umms-smaht/working/202401_phasing', 'LIBD75_Illumina_WGS.markedTrue.RG.sorted.bam')
-readfile = pysam.AlignmentFile(readfile, mode = 'rb')
-outfile = pysam.AlignmentFile(os.path.join(folder+'phased/', 'LIBD75_Illumina_WGS.markedTrue.RG.sorted.phased.bam'), "wb", template=readfile)
+# Output BAM file
+outfile = pysam.AlignmentFile(args.output_bam, "wb", template=readfile)
+
 hapcount = GenerateResult('WGS', readfile, outfile, hapcount, hetsnp, snp_pos)
 
-with open('hapcount_WGS.pkl', 'wb') as f:
+# Write hapcount to a pickle file
+with open(args.output_hapcount, 'wb') as f:
     pickle.dump(hapcount, f)
