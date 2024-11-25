@@ -97,6 +97,18 @@ python $DIR/QC_consist.py 10x_snps_detail.txt shasta.hapdup.phased.hapog.pileup
 HaplotagLR haplotag --output_directory_name ${WSP}/${INPUT}.hap --vcf ${VCF} -i ${INPUT}.bam --reference ${REF} --reference_assembly ${REF_VER} --log_likelihood_threshold 0 -F 0 --threads 4
 ```
 
+**Short Read Phasing**
+
+The scripts of this pipeline can be found at https://github.com/WeichenZhou/LIBD75/blob/main/assign_haplotype.py.
+
+```
+python assign_haplotype.py \
+    --input_bam /path/to/input.bam \
+    --output_bam /path/to/output.bam \
+    --output_hapcount /path/to/output_hapcount.pkl \
+    --hetsnp_vcf /path/to/hetsnp.vcf.gz
+```
+
 ### Genetic Variant Calling
 
 * Assembly Contig
