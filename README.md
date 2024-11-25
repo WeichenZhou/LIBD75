@@ -377,6 +377,6 @@ For HaploTaglr:
 ## Contact:
 
 arthurz@umich.edu
-drinktea@umich.edu, crmumm@umich.edu, wjhlang@umich.edu
+drinktea@umich.edu, wjhlang@umich.edu, crmumm@umich.edu
 
 
