@@ -120,7 +120,13 @@ python assign_haplotype.py \
     
     # Under the same folder, we included config.json which contains the reference file path and assemblies.tsv which contains the name and path of our phased assembly contigs. The reference we used here is GCA_000001405.15_GRCh38_no_alt_analysis_set.fa. 
     ```
+
+    **RepeatMasker version 4.1.2**
     
+    ``` 
+    ${RepeatMasker} -e hmmer ${a}.${b}.input.fa -species human
+    ```
+
     **PALMER version 2.0.1**
 
     ``` 
@@ -199,7 +205,6 @@ python assign_haplotype.py \
 
     # SVA
     ./PALMER --input $bam_file --workdir $work_dire --ref_ver GRCh38 --output $output --type SVA --mode raw --chr $chr --ref_fa GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
-
     ```
 
     **xTea_long version 0.1.0**
@@ -317,6 +322,7 @@ python assign_haplotype.py \
     ```
 
 * TEnCATS
+
 TBD
 
 * Neurons ONT
@@ -327,8 +333,7 @@ TBD
 
     samtools mpileup -q 15 -d 90 -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions $Potential_coordinates --output-extra MAPQ $bam_file
 
-    # And the output is processed by TODO
-        
+    # And the output is processed by TODO 
     ```
 
     SV here
@@ -350,7 +355,6 @@ TBD
     samtools mpileup -q 15 -d 90 -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa --positions $Potential_coordinates --output-extra MAPQ $bam_file
 
     # And the output is processed by TODO
-
     ```
 
     SV here
