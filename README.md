@@ -22,19 +22,19 @@ samtools index "$exp".sorted.bam
 
 ### Assembly
 
-**Flye**
+**Flye version 2.9.2** 
 
 ```
 flye --nano-raw path-of-lr-fastq -g 3g -o flye -t 30 
 ```
 
-**Shasta**
+**Shasta version 0.11.1**
 
 ``` 
 ./shasta-Linux-0.11.1 --input $DIR/data/ONT/ONT.bulk.fastq --config customized.conf --assemblyDirectory shasta --threads 30
 ```
 
-**Hapdup**
+**Hapdup version 0.12**
 
 ```
 minimap2 -ax map-ont -t 30 $HD_DIR/flye/assembly.fasta path-of-lr-fastq | samtools sort -@ 4 -m 4G > $HD_DIR/hapdup/lr_mapping.bam
@@ -43,26 +43,26 @@ samtools index -@ 4 $HD_DIR/hapdup/lr_mapping.bam
 singularity exec --bind $DIR hapdup_0.12.sif hapdup --assembly $DIR/shasta/shasta.fasta --bam $DIR/hapdup/lr_mapping.bam --out-dir hapdup -t 24 --rtype ont
 ```
 
-**HAPO-G**
+**HAPO-G version 1.38**
 
 ```
 hapog --genome shasta.hapdup.fasta --pe1 $DIR/data/Illumina/LIBD75_Illumina_WGS_R1.fastq --pe2 $DIR/data/Illumina/LIBD75_Illumina_WGS_R2.fastq -o hapog -t 24 -u
 ```
 
-**BUSCO**
+**BUSCO version 5.7.1**
 
 ```
 busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H1/ --auto-lineage
 busco -i $DIR/Hap1.shasta.hapdup.phased.hapog.fasta -f -m genome -c 24 -o busco_H2/ --auto-lineage
 ```
 
-**QUAST**
+**QUAST version 5.2.0**
 
 ```
 quast.py $DIR/Hap1.shasta.hapdup.phased.hapog.fasta $DIR/Hap2.shasta.hapdup.phased.hapog.fasta -r /nfs/turbo/umms-smaht/technical/reference/20230909_GRCh38_no_alt_analysis_set_SMaHT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa -o quast -t 24
 ```
 
-**Merqury**
+**Merqury version 1.3**
 
 ```
 meryl k=21 count $DIR/data/Illumina/*.fastq.gz output $genome.meryl
