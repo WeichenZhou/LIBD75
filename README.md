@@ -323,7 +323,7 @@ python assign_haplotype.py \
 
 * TEnCATS
 
-TBD
+    See https://github.com/sjl/nanopal-snakemake 
 
 * Neurons ONT
 
