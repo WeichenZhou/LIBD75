@@ -336,9 +336,9 @@ python assign_haplotype.py \
     # And the output is processed by TODO 
     ```
 
-    SV here
-
-
+    **GARLIC**
+            
+    See https://github.com/WeichenZhou/GARLIC
 
     **Palmesom**
             
@@ -357,8 +357,9 @@ python assign_haplotype.py \
     # And the output is processed by TODO
     ```
 
-    SV here
-
+    **Ginkgo**
+            
+    See https://github.com/kunalkathuria/adaptedGinkgo
 
     **xTea version 0.1.9**
     ``` 
