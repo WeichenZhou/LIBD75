@@ -384,9 +384,9 @@ python assign_haplotype.py \
 ### Citation
 
 For this project:
-* Weichen Zhou, Camille Mumm, Yanming Gan, Jessica A. Switzenberg, Jinhao Wang, Paulo De Oliveira, Kunal Kathuria, Steven J. Losh, Brandt Bessell, Torrin L. McDonald, Kinsey Van Deynze, Michael J. McConnell, Alan P. Boyle, Ryan E. Mills
+* Weichen Zhou*, Camille Mumm*, Yanming Gan*, Jessica A. Switzenberg, Jinhao Wang, Paulo De Oliveira, Kunal Kathuria, Steven J. Losh, Torrin L. McDonald, Brandt Bessell, Kinsey Van Deynze, Michael J. McConnell, Alan P. Boyle, Ryan E. Mills
 [A personalized multi-platform assessment of somatic mosaicism in the human frontal cortex], 
-*BioXriv*, 2024, `TBD`
+*BioXriv*, 2024, `https://doi.org/10.1101/2024.12.18.629274`
 
 For TEnCATS
 * Torrin L. McDonald*,  Weichen Zhou*,  Christopher Castro,  Camille Mumm,  Jessica A. Switzenberg,  Ryan E. Mills,  Alan P. Boyle,
